@@ -11,9 +11,14 @@ class AppRouter extends StatelessWidget {
   Widget build(BuildContext context) {
     final session = context.watch<SessionController>();
 
-    if (session.isTactile) {
-      return const TactileEntry();
+    if (!session.initialized) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
     }
-    return const ADHDEntry();
+
+    return session.isTactile
+        ? const TactileEntry()
+        : const ADHDEntry();
   }
 }
